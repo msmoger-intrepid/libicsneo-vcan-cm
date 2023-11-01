@@ -48,7 +48,7 @@ public:
 
 protected:
 	ValueCAN4_2(neodevice_t neodevice, const driver_factory_t& makeDriver) : ValueCAN4(neodevice) {
-		initialize<ValueCAN4_2Settings>(makeDriver);
+		initialize<ValueCAN4_2Settings, Disk::NeoMemoryDiskDriver, Disk::NeoMemoryDiskDriver>(makeDriver);
 	}
 
 	void setupSupportedRXNetworks(std::vector<Network>& rxNetworks) override {
