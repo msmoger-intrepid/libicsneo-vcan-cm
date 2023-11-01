@@ -514,18 +514,21 @@ bool Device::uploadCoremini(std::unique_ptr<std::istream>&& stream, Disk::Memory
 	if(!startAddress) {
 		return false;
 	}
-
-	auto connected = isLogicalDiskConnected();
 	
-	if(!connected) {
-		return false; // Already added an API error
+	if(memType == Disk::MemoryType::SD)
+	{
+		auto connected = isLogicalDiskConnected();
+		
+		if(!connected) {
+			return false; // Already added an API error
+		}
+		
+		if(!(*connected)) {
+			report(APIEvent::Type::DiskNotConnected, APIEvent::Severity::Error);
+			return false;
+		}
 	}
 	
-	if(!(*connected)) {
-		report(APIEvent::Type::DiskNotConnected, APIEvent::Severity::Error);
-		return false;
-	}
-
 	if(!stopScript()) {
 		return false;
 	}
